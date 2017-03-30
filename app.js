@@ -8,12 +8,19 @@ var port = process.env.PORT || 1337;
 
 var url = "http://catedral.prefeitura.unicamp.br/cardapio.php";
 
+var almoco;
+
 request(url, function(err, resp, body){
   var $ = cheerio.load(body);
-  var whatsthis = $('.titulo');
-  var whatsthistext = whatsthis.text();
 
-  console.log(whatsthistext);
+  var fruits = [];
+
+  $('td').each(function(i, elem) {
+    fruits[i] = $(this).text();
+  });
+
+  almoco = fruits[9];
+
 });
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -23,7 +30,7 @@ app.get('/', function(req, res) {res.status(200).send('Hello World!'); });
 app.post('/hello', function(req, res, next){
   var username = req.body.user_name;
   var botPayLoad = {
-    text: 'Hey ' + username + ', I am Link, your link management assistant'
+    text: 'Hey ' + username + ', o almoço de hoje é ' + almoco
   };
 
   if(username !== 'slackbot') {
