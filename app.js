@@ -8,29 +8,43 @@ var port = process.env.PORT || 1337;
 
 var url = "http://catedral.prefeitura.unicamp.br/cardapio.php";
 
-var almoco;
+
+// 1 - prato principal
+// 4 - sobremesa
+// 5 - suco
+var almoco = [];
+var janta = [];
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
 
 request(url, function(err, resp, body){
   var $ = cheerio.load(body);
 
-  var fruits = [];
-
-  $('td').each(function(i, elem) {
-    fruits[i] = $(this).text();
+  $('.fundo_cardapio').each(function(i, elem) {
+    $('strong').remove();
+    $('br').remove();
+    var cardapio = $(this);
+    if(i == 1 || i == 3){
+      cardapio.find('tr td').each(function (j) {
+        if(i == 1) almoco[j] = $(this).text().toProperCase();
+        else if(i == 3) janta[j] = $(this).text().toProperCase();
+      });
+    }
   });
 
-  almoco = fruits[9];
 
 });
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/', function(req, res) {res.status(200).send('Hello World!'); });
+app.get('/', function(req, res) {res.status(200).send('Hello World! Fully functional.'); });
 
 app.post('/hello', function(req, res, next){
   var username = req.body.user_name;
   var botPayLoad = {
-    text: 'Hey ' + username + ', o almoço de hoje é ' + almoco
+    text: 'O almoço de hoje é *' + almoco[1] + '* com suco de *' + almoco[5] + '* e *' + almoco[4] + '* de sobremesa! \n A janta é *' + janta[1] + '* com suco de *' + almoco[5] + '* e *' + almoco[4] + '* de sobremesa!'
   };
 
   if(username !== 'slackbot') {
