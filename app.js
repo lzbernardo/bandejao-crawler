@@ -15,6 +15,7 @@ var url = "http://catedral.prefeitura.unicamp.br/cardapio.php";
 // 5 - suco
 var almoco = [];
 var janta = [];
+var k = 0;
 
 String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -23,33 +24,55 @@ String.prototype.toProperCase = function () {
 
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
   request(url, function(err, resp, body){
     var $ = cheerio.load(body);
 
     $('.fundo_cardapio').each(function(i, elem) {
-      $('strong').remove();
+      k = 0;
       $('br').remove();
       var cardapio = $(this);
       if(i == 1 || i == 3){
         cardapio.find('tr td').each(function (j) {
-          if(i == 1) almoco[j] = $(this).text().toProperCase();
-          else if(i == 3) janta[j] = $(this).text().toProperCase();
+          if($(this).find('strong').is('strong')){
+            $(this).find('strong').remove();
+            //console.log($(this).text());
+            if(i == 1) almoco[k++] = $(this).html().toProperCase();
+            else if(i == 3) janta[k++] = $(this).html().toProperCase();
+          }
         });
       }
     });
 
 
   });
-  res.send(almoco);
+  res.send('Hello!');
+  console.log(almoco);
+  console.log(janta);
 });
+
+/*
+  SE ENCONTRAR BOLD
+    PEGA O CONTEÚDO DO PAI
+    REMOVE O BOLD
+    ADICIONA O RESTO NA ARRAY
+
+  INDEX 0 = PRATO PRINCIPAL
+  INDEX 1 = SALADA
+  INDEX 2 = SOBREMESA
+  INDEX 3 = SUCO
+*/
+
 
 app.post('/hello', function(req, res, next){
   var username = req.body.user_name;
+  var myTime = new Date.getTime();
   var botPayLoad = {
-    text: 'O almoço de hoje é *' + almoco[1] + '* com suco de *' + almoco[5] + '* e *' + almoco[4] + '* de sobremesa! \n A janta é *' + janta[1] + '* com suco de *' + almoco[5] + '* e *' + almoco[4] + '* de sobremesa!'
+    "attachments":{
+      "color": "#36a64f",
+      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco:*' + almoco[3] + '*\n Sobremesa*' + almoco[2] + '*\n' + myTime;
+    }
   };
 
   if(username !== 'slackbot') {
