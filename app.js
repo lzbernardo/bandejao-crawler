@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cheerio = require('cheerio');
 var request = require('request');
+var path = require('path');
 
 var app = express();
 var port = process.env.PORT || 1337;
@@ -38,8 +39,9 @@ request(url, function(err, resp, body){
 });
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res) {res.status(200).send('Hello World! Fully functional.'); });
+app.get('/', function(req, res) { res.send("Hello world"); });
 
 app.post('/hello', function(req, res, next){
   var username = req.body.user_name;
