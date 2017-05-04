@@ -20,29 +20,30 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 
-request(url, function(err, resp, body){
-  var $ = cheerio.load(body);
 
-  $('.fundo_cardapio').each(function(i, elem) {
-    $('strong').remove();
-    $('br').remove();
-    var cardapio = $(this);
-    if(i == 1 || i == 3){
-      cardapio.find('tr td').each(function (j) {
-        if(i == 1) almoco[j] = $(this).text().toProperCase();
-        else if(i == 3) janta[j] = $(this).text().toProperCase();
-      });
-    }
-  });
-
-
-});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
-  res.send("Hello world");
+  request(url, function(err, resp, body){
+    var $ = cheerio.load(body);
+
+    $('.fundo_cardapio').each(function(i, elem) {
+      $('strong').remove();
+      $('br').remove();
+      var cardapio = $(this);
+      if(i == 1 || i == 3){
+        cardapio.find('tr td').each(function (j) {
+          if(i == 1) almoco[j] = $(this).text().toProperCase();
+          else if(i == 3) janta[j] = $(this).text().toProperCase();
+        });
+      }
+    });
+
+
+  });
+  res.send(almoco);
 });
 
 app.post('/hello', function(req, res, next){
