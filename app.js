@@ -71,7 +71,7 @@ app.post('/hello', function(req, res, next){
   var botPayLoad = {
     "attachments":{
       "color": "#36a64f",
-      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco:*' + almoco[3] + '*\n Sobremesa*' + almoco[2] + '*\n' + myTime;
+      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco:*' + almoco[3] + '*\n Sobremesa*' + almoco[2] + '*\n' + myTime
     }
   };
 
