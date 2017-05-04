@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cheerio = require('cheerio');
 var request = require('request');
+var he = require('he');
 var path = require('path');
 
 var app = express();
@@ -21,14 +22,10 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 
-
-
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', function(req, res){
 
-  var myDate = new Date();
-  console.log(myDate);
   request(url, function(err, resp, body){
     var $ = cheerio.load(body);
 
@@ -71,7 +68,7 @@ app.get('/', function(req, res){
 app.post('/almoco', function(req, res, next){
   var username = req.body.user_name;
   var botPayLoad = {
-      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco:*' + almoco[3] + '*\n Sobremesa*' + almoco[2] + '*\n'
+      "text": 'Prato Principal: *' + he.decode(almoco[0]) + '*\n Suco: *' + almoco[3] + '*\n Sobremesa: *' + almoco[2] + '*\n'
   };
 
   if(username !== 'slackbot') {
@@ -85,7 +82,7 @@ app.post('/janta', function(req, res, next){
   var username = req.body.user_name;
   var botPayLoad = {
 
-      "text": 'Prato Principal: *' + janta[0] + '*\n Suco:*' + janta[3] + '*\n Sobremesa*' + janta[2] + '*\n'
+      "text": 'Prato Principal: *' + janta[0] + '*\n Suco: *' + janta[3] + '*\n Sobremesa: *' + janta[2] + '*\n'
 
   };
 
