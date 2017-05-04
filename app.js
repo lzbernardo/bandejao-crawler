@@ -26,6 +26,9 @@ String.prototype.toProperCase = function () {
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', function(req, res){
+
+  var myDate = new Date();
+  console.log(myDate);
   request(url, function(err, resp, body){
     var $ = cheerio.load(body);
 
@@ -65,13 +68,28 @@ app.get('/', function(req, res){
 */
 
 
-app.post('/hello', function(req, res, next){
+app.post('/almoco', function(req, res, next){
   var username = req.body.user_name;
-  var myTime = new Date.getTime();
   var botPayLoad = {
     "attachments":{
       "color": "#36a64f",
-      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco:*' + almoco[3] + '*\n Sobremesa*' + almoco[2] + '*\n' + myTime
+      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco:*' + almoco[3] + '*\n Sobremesa*' + almoco[2] + '*\n'
+    }
+  };
+
+  if(username !== 'slackbot') {
+    return res.status(200).json(botPayLoad);
+  } else {
+    return res.status(200).end();
+  }
+});
+
+app.post('/janta', function(req, res, next){
+  var username = req.body.user_name;
+  var botPayLoad = {
+    "attachments":{
+      "color": "#36a64f",
+      "text": 'Prato Principal: *' + janta[0] + '*\n Suco:*' + janta[3] + '*\n Sobremesa*' + janta[2] + '*\n'
     }
   };
 
