@@ -41,7 +41,9 @@ request(url, function(err, resp, body){
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res) { res.send("Hello world"); });
+app.get('/', function(req, res){
+  res.send("Hello world");
+});
 
 app.post('/hello', function(req, res, next){
   var username = req.body.user_name;
