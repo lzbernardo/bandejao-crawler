@@ -71,10 +71,7 @@ app.get('/', function(req, res){
 app.post('/almoco', function(req, res, next){
   var username = req.body.user_name;
   var botPayLoad = {
-    "attachments":{
-      "color": "#36a64f",
       "text": 'Prato Principal: *' + almoco[0] + '*\n Suco:*' + almoco[3] + '*\n Sobremesa*' + almoco[2] + '*\n'
-    }
   };
 
   if(username !== 'slackbot') {
@@ -87,10 +84,9 @@ app.post('/almoco', function(req, res, next){
 app.post('/janta', function(req, res, next){
   var username = req.body.user_name;
   var botPayLoad = {
-    "attachments":{
-      "color": "#36a64f",
+
       "text": 'Prato Principal: *' + janta[0] + '*\n Suco:*' + janta[3] + '*\n Sobremesa*' + janta[2] + '*\n'
-    }
+
   };
 
   if(username !== 'slackbot') {
