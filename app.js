@@ -66,7 +66,7 @@ app.get('/', function(req, res){
 
 app.post('/slackrequest', function(req, res, next){
   var username = req.body.user_name;
-  var text = req.body.text.toLowerCase();
+  var text = req.body.text;
 
   if(username == 'lzbernardo'){
     var botPayLoad = { "text" : 'nao funcionou ber'};
