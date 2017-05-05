@@ -48,6 +48,7 @@ app.get('/', function(req, res){
   });
   console.log(almoco);
   console.log(janta);
+  res.send('Hello World!');
 });
 
 /*
@@ -65,8 +66,8 @@ app.get('/', function(req, res){
 
 app.post('/almoco', function(req, res, next){
   var username = req.body.user_name;
-  if(req.body.user_name == 'lzbernardo')
-    var botPayLoad = { "text" : "Pra vc não" };
+  if(req.body.user_name != 'lzbernardo')
+    var botPayLoad = { "text" : "Deve ser cozido misto brother" };
   else
     var botPayLoad = {
       "text": 'Prato Principal: *' + almoco[0] + '*\n Suco: *' + almoco[3] + '*\n Sobremesa: *' + almoco[2] + '*\n'
