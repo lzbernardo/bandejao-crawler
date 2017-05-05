@@ -47,8 +47,7 @@ app.get('/', function(req, res){
 
 
   });
-  console.log(almoco);
-  console.log(janta);
+  console.log('rolou um get aqui');
   res.send('Hello World!');
 });
 
@@ -63,22 +62,60 @@ app.get('/', function(req, res){
   INDEX 2 = SOBREMESA
   INDEX 3 = SUCO
 */
+var randomExpression = function(){
+
+  var jsonContent = {
+    "featured": [
+      'vai rolar',
+      'vai ter',
+      'o prato vai ser',
+    ]
+  };
+
+  return (jsonContent.featured[Math.floor(Math.random() * jsonContent.featured.length)]);
+}
+
+var interjection = function(){
+
+  var jsonContent = {
+    "featured": [
+      'Opa! ',
+      'Deu sorte! ',
+      'Ihhh... ',
+      'Eita! '
+    ]
+  };
+
+  return (jsonContent.featured[Math.floor(Math.random() * jsonContent.featured.length)]);
+}
 
 app.post('/slackrequest', function(req, res, next){
   var username = req.body.user_name;
   var text = req.body.text.toLowerCase();
 
-  if(username == 'lzbernardo'){
-    var botPayLoad = { "text" : 'nao funcionou ber'};
+  var d = new Date();
+  var n = d.getHours();
+  console.log(n);
+
+  if(username == 'luiz.madoreira'){
+    var botPayLoad = { "text" : interjection() + 'Especialmente pra você, hoje vai ter *Cozido Misto* com suco de *Acerola*. A sobremesa vai ser *Acelga*'};
   }
 
-  if(text.indexOf('no almoço')!=-1 || text.indexOf('no almoco')!=-1 || text.indexOf('de almoço')!=-1 || text.indexOf('de almoco')!=-1 || text.indexOf('do almoco')!=-1 || (text.indexOf('almoco')!=-1 && waiting) ){
+  else if(username == 'gabrielaffonso'){
+    var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'}
+  }
+
+  else if(username == 'gabrielaffonso'){
+    var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'}
+  }
+
+  else if(text.indexOf('no almoço')!=-1 || text.indexOf('no almoco')!=-1 || text.indexOf('de almoço')!=-1 || text.indexOf('de almoco')!=-1 || text.indexOf('do almoco')!=-1 || (text.indexOf('almoco')!=-1 && waiting) ){
     if(almoco[0].toLowerCase().indexOf('cozido')!=-1){
       var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
     }
     else {
       var botPayLoad = {
-        "text": 'Vai rolar: *' + almoco[0] + '* com suco de *' + almoco[3] + '*. A sobremesa vai ser *' + almoco[2] + '*'
+        "text": 'No *almoço* ' + randomExpression() + ' *' + almoco[0] + '* com suco de *' + almoco[3] + '*. A sobremesa vai ser *' + almoco[2] + '*'
       };
     }
     waiting = 0;
@@ -90,7 +127,7 @@ app.post('/slackrequest', function(req, res, next){
     }
     else {
       var botPayLoad = {
-        "text": 'Vai rolar: *' + janta[0] + '* com suco de *' + janta[3] + '*. A sobremesa vai ser *' + janta[2] + '*'
+        "text": 'Na *janta* ' + randomExpression() + ' *' + janta[0] + '* com suco de *' + janta[3] + '*. A sobremesa vai ser *' + janta[2] + '*'
       };
     }
     waiting = 0;
