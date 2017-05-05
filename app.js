@@ -66,12 +66,12 @@ app.get('/', function(req, res){
 
 app.post('/almoco', function(req, res, next){
   var username = req.body.user_name;
-  if(req.body.user_name != 'lzbernardo')
-    var botPayLoad = { "text" : "Deve ser cozido misto brother" };
-  else
-    var botPayLoad = {
-      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco: *' + almoco[3] + '*\n Sobremesa: *' + almoco[2] + '*\n'
-    };
+  var text = req.body.text;
+  if(text == 'coe rapaziada'){
+    var botPayLoad = { "text": 'eae parcero' };
+  } else {
+    var botPayLoad = { "text": text };
+  }
 
   if(username !== 'slackbot') {
     return res.status(200).json(botPayLoad);
