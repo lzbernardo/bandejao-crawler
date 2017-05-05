@@ -99,6 +99,8 @@ app.post('/slackrequest', function(req, res, next){
   var n = d.getHours() - 3;
   console.log(n);
 
+  /* DAQUI PRA BAIXO É PUTARIA IRMAO */
+
   if(
             (username == 'luiz.madoreira') &&
             ( (text.indexOf('bandeco') != -1) || (text.indexOf('almoço')) != -1 || (text.indexOf('janta')) )
@@ -168,6 +170,7 @@ app.post('/slackrequest', function(req, res, next){
     var botPayLoad = { "text" : "Não entendi! Tenda pedir o cardápio de alguma refeição do bandeco que eu posso te ajudar :wink:" };
   }
 
+    /* DAQUI PRA CIMA É PUTARIA IRMAO */
 
   if(username !== 'slackbot') {
     return res.status(200).json(botPayLoad);
