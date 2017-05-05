@@ -112,7 +112,7 @@ app.post('/slackrequest', function(req, res, next){
   }
 
   else if(username == 'ismael.melo' || text.indexOf('finge que eu sou o ismael')!=-1){
-    var botPayLoad = { "text" : 'Vai ter *croissant*, certeza.'};
+    var botPayLoad = { "text" : 'Vai ter *croissant* no bandeco hj, certeza.'};
   }
 
   else if( (n > 14 && n < 13) || (n > 20 && n < 0) ){
