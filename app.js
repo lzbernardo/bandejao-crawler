@@ -107,10 +107,6 @@ app.post('/slackrequest', function(req, res, next){
     var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'};
   }
 
-  else if(text.indexOf('ae porra!')!=-1){
-    var botPayLoad = { "text" : '/meme success COEEE; RAPAZIADA'};
-  }
-
   else if(username == 'ismael.melo' || text.indexOf('finge que eu sou o ismael')!=-1){
     var botPayLoad = { "text" : 'Vai ter *croissant* no bandeco hj, certeza.'};
   }
