@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', function(req, res){
 
-  request(url, function(err, resp, body){
+  request(url, { encoding: 'latin1' }, function(err, resp, body){
     var $ = cheerio.load(body);
 
     $('.fundo_cardapio').each(function(i, elem) {
@@ -38,8 +38,8 @@ app.get('/', function(req, res){
           if($(this).find('strong').is('strong')){
             $(this).find('strong').remove();
             //console.log($(this).text());
-            if(i == 1) almoco[k++] = $(this).html().toProperCase();
-            else if(i == 3) janta[k++] = $(this).html().toProperCase();
+            if(i == 1) almoco[k++] = $(this).text().toProperCase();
+            else if(i == 3) janta[k++] = $(this).text().toProperCase();
           }
         });
       }
