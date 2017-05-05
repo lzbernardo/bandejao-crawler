@@ -163,6 +163,11 @@ app.post('/slackrequest', function(req, res, next){
     var botPayLoad = { "text" : "É tois parcero :fathayase:, bom apetite lá!" };
   }
 
+  else if(text.indexOf('link')!=-1){
+
+    var botPayLoad = { "text" : "Não entendi! Tenda pedir o cardápio de alguma refeição do bandeco que eu posso te ajudar :wink:" };
+  }
+
 
   if(username !== 'slackbot') {
     return res.status(200).json(botPayLoad);
