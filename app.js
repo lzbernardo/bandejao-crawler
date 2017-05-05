@@ -89,29 +89,23 @@ var interjection = function(){
   return (jsonContent.featured[Math.floor(Math.random() * jsonContent.featured.length)]);
 }
 
+var waiting = 0;
+
 app.post('/slackrequest', function(req, res, next){
   var username = req.body.user_name;
   var text = req.body.text.toLowerCase();
 
   var d = new Date();
-  var n = d.getHours();
+  var n = d.getHours() - 3;
   console.log(n);
 
   if(username == 'luiz.madoreira'){
     var botPayLoad = { "text" : interjection() + 'Especialmente pra você, hoje vai ter *Cozido Misto* com suco de *Acerola*. A sobremesa vai ser *Acelga*'};
   }
 
-  else if(username == 'gabrielaffonso'){
-    var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'}
-  }
-
-  else if(username == 'gabrielaffonso'){
-    var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'}
-  }
-
-  else if(text.indexOf('no almoço')!=-1 || text.indexOf('no almoco')!=-1 || text.indexOf('de almoço')!=-1 || text.indexOf('de almoco')!=-1 || text.indexOf('do almoco')!=-1 || (text.indexOf('almoco')!=-1 && waiting) ){
+  else if(waiting && (text.indexOf('almoco')!=-1)){
     if(almoco[0].toLowerCase().indexOf('cozido')!=-1){
-      var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
+      var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto :mask:' };
     }
     else {
       var botPayLoad = {
@@ -121,7 +115,7 @@ app.post('/slackrequest', function(req, res, next){
     waiting = 0;
   }
 
-  else if(text.indexOf('na janta')!=-1 || text.indexOf('de janta')!=-1 || text.indexOf('pra janta')!=-1 || text.indexOf('da janta')!=-1 || (text.indexOf('janta')!=-1 && waiting)){
+  else if(waiting && (text.indexOf('janta')!=-1)){
     if(janta[0].toLowerCase().indexOf('cozido')!=-1){
       var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
     }
@@ -131,6 +125,40 @@ app.post('/slackrequest', function(req, res, next){
       };
     }
     waiting = 0;
+  }
+
+  else if(username == 'gabrielaffonso'){
+    var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'};
+  }
+
+  else if(username == 'ismael.melo'){
+    var botPayLoad = { "text" : 'Vai ter *croissant*, certeza.'};
+  }
+
+  else if( (n > 14 && n < 13) || (n > 20 && n < 0) ){
+    var botPayLoad = { "text" : 'Acho que agora já tá meio tarde, né brother... Mas na FEA/FEM sempre tem comida :relieved:'};
+  }
+
+  else if(text.indexOf('no almoço')!=-1 || text.indexOf('no almoco')!=-1 || text.indexOf('de almoço')!=-1 || text.indexOf('de almoco')!=-1 || text.indexOf('do almoco')!=-1 ){
+    if(almoco[0].toLowerCase().indexOf('cozido')!=-1){
+      var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto :mask:' };
+    }
+    else {
+      var botPayLoad = {
+        "text": 'No *almoço* ' + randomExpression() + ' *' + almoco[0] + '* com suco de *' + almoco[3] + '*. A sobremesa vai ser *' + almoco[2] + '*'
+      };
+    }
+  }
+
+  else if(text.indexOf('na janta')!=-1 || text.indexOf('de janta')!=-1 || text.indexOf('pra janta')!=-1 || text.indexOf('da janta')!=-1){
+    if(janta[0].toLowerCase().indexOf('cozido')!=-1){
+      var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
+    }
+    else {
+      var botPayLoad = {
+        "text": 'Na *janta* ' + randomExpression() + ' *' + janta[0] + '* com suco de *' + janta[3] + '*. A sobremesa vai ser *' + janta[2] + '*'
+      };
+    }
   }
 
   else if(text.indexOf('no bandeco')!=-1 || text.indexOf('no bandejao')!=-1 || text.indexOf('pra comer')!=-1){
