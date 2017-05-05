@@ -99,39 +99,15 @@ app.post('/slackrequest', function(req, res, next){
   var n = d.getHours() - 3;
   console.log(n);
 
-  if(username == 'luiz.madoreira'){
+  if(username == 'luiz.madoreira' || text.indexOf('finge que eu sou o banana')!=-1){
     var botPayLoad = { "text" : interjection() + 'Especialmente pra você, hoje vai ter *Cozido Misto* com suco de *Acerola*. A sobremesa vai ser *Acelga*'};
   }
 
-  else if(waiting && (text.indexOf('almoco')!=-1)){
-    if(almoco[0].toLowerCase().indexOf('cozido')!=-1){
-      var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto :mask:' };
-    }
-    else {
-      var botPayLoad = {
-        "text": 'No *almoço* ' + randomExpression() + ' *' + almoco[0] + '* com suco de *' + almoco[3] + '*. A sobremesa vai ser *' + almoco[2] + '*'
-      };
-    }
-    waiting = 0;
-  }
-
-  else if(waiting && (text.indexOf('janta')!=-1)){
-    if(janta[0].toLowerCase().indexOf('cozido')!=-1){
-      var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
-    }
-    else {
-      var botPayLoad = {
-        "text": 'Na *janta* ' + randomExpression() + ' *' + janta[0] + '* com suco de *' + janta[3] + '*. A sobremesa vai ser *' + janta[2] + '*'
-      };
-    }
-    waiting = 0;
-  }
-
-  else if(username == 'gabrielaffonso'){
+  else if(username == 'gabrielaffonso' || text.indexOf('finge que eu sou o cabra')!=-1){
     var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'};
   }
 
-  else if(username == 'ismael.melo'){
+  else if(username == 'ismael.melo' || text.indexOf('finge que eu sou o ismael')!=-1){
     var botPayLoad = { "text" : 'Vai ter *croissant*, certeza.'};
   }
 
@@ -162,7 +138,7 @@ app.post('/slackrequest', function(req, res, next){
   }
 
   else if(text.indexOf('no bandeco')!=-1 || text.indexOf('no bandejao')!=-1 || text.indexOf('pra comer')!=-1){
-    var botPayLoad = { "text" : "Tu quer saber do almoço ou da janta?" };
+    var botPayLoad = { "text" : "Tu quer saber _do almoço_ ou _da janta_? :thinking_face:" };
     waiting = 1;
   }
 
