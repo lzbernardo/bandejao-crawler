@@ -66,14 +66,14 @@ app.get('/', function(req, res){
 
 app.post('/slackrequest', function(req, res, next){
   var username = req.body.user_name;
-  var text = req.body.text;
+  var text = req.body.text.toLowerCase();
 
   if(username == 'lzbernardo'){
     var botPayLoad = { "text" : 'nao funcionou ber'};
   }
 
-  if(text.contains('no almoço') || text.contains('no almoco') || text.contains('de almoço') || text.contains('de almoco') || text.contains('do almoco') || (text.contains('almoco') && waiting) ){
-    if(almoco[0].toLowerCase().contains('cozido')){
+  if(text.indexOf('no almoço')!=-1 || text.indexOf('no almoco')!=-1 || text.indexOf('de almoço')!=-1 || text.indexOf('de almoco')!=-1 || text.indexOf('do almoco')!=-1 || (text.indexOf('almoco')!=-1 && waiting) ){
+    if(almoco[0].toLowerCase().indexOf('cozido')!=-1){
       var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
     }
     else {
@@ -84,8 +84,8 @@ app.post('/slackrequest', function(req, res, next){
     waiting = 0;
   }
 
-  else if(text.contains('na janta') || text.contains('de janta') || text.contains('pra janta') || text.contains('da janta') || (text.contains('janta') && waiting)){
-    if(janta[0].toLowerCase().contains('cozido')){
+  else if(text.indexOf('na janta')!=-1 || text.indexOf('de janta')!=-1 || text.indexOf('pra janta')!=-1 || text.indexOf('da janta')!=-1 || (text.indexOf('janta')!=-1 && waiting)){
+    if(janta[0].toLowerCase().indexOf('cozido')!=-1){
       var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
     }
     else {
@@ -96,12 +96,12 @@ app.post('/slackrequest', function(req, res, next){
     waiting = 0;
   }
 
-  else if(text.contains('no bandeco') || text.contains('no bandejao') || text.contains('pra comer')){
+  else if(text.indexOf('no bandeco')!=-1 || text.indexOf('no bandejao')!=-1 || text.indexOf('pra comer')!=-1){
     var botPayLoad = { "text" : "Tu quer saber do almoço ou da janta?" };
     waiting = 1;
   }
 
-  else if(text.contains('valeu link') || text.contains('obrigado link')){
+  else if(text.indexOf('valeu link')!=-1 || text.indexOf('obrigado link')!=-1){
     var botPayLoad = { "text" : "É tois parcero :fathayase:, bom apetite lá!" };
   }
 
