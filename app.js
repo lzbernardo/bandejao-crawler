@@ -67,10 +67,12 @@ app.get('/', function(req, res){
 app.post('/almoco', function(req, res, next){
   var username = req.body.user_name;
   var text = req.body.text;
+
+
   if(text == 'coe rapaziada'){
     var botPayLoad = { "text": 'eae parcero' };
   } else {
-    var botPayLoad = { "text": text };
+    var botPayLoad = { "text": 'working?' };
   }
 
   if(username !== 'slackbot') {
