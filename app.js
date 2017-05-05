@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cheerio = require('cheerio');
 var request = require('request');
-var he = require('he');
 var path = require('path');
 
 var app = express();
@@ -39,7 +38,7 @@ app.get('/', function(req, res){
             $(this).find('strong').remove();
             //console.log($(this).text());
             if(i == 1) almoco[k++] = $(this).html().toProperCase();
-            else if(i == 3) janta[k++] = $(this).html().toProperCase();
+            else if(i == 3) janta[k++] = $(this).text().toProperCase();
           }
         });
       }
@@ -47,7 +46,6 @@ app.get('/', function(req, res){
 
 
   });
-  res.send('Hello!');
   console.log(almoco);
   console.log(janta);
 });
@@ -67,9 +65,12 @@ app.get('/', function(req, res){
 
 app.post('/almoco', function(req, res, next){
   var username = req.body.user_name;
-  var botPayLoad = {
-      "text": 'Prato Principal: *' + he.decode(almoco[0]) + '*\n Suco: *' + almoco[3] + '*\n Sobremesa: *' + almoco[2] + '*\n'
-  };
+  if(req.body.user_name == 'lzbernardo')
+    var botPayLoad = { "text" : "Pra vc não" };
+  else
+    var botPayLoad = {
+      "text": 'Prato Principal: *' + almoco[0] + '*\n Suco: *' + almoco[3] + '*\n Sobremesa: *' + almoco[2] + '*\n'
+    };
 
   if(username !== 'slackbot') {
     return res.status(200).json(botPayLoad);
