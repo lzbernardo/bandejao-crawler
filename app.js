@@ -99,16 +99,33 @@ app.post('/slackrequest', function(req, res, next){
   var n = d.getHours() - 3;
   console.log(n);
 
-  if(username == 'luiz.madoreira' || text.indexOf('finge que eu sou o banana')!=-1){
+  if(
+            (username == 'luiz.madoreira') &&
+            ( (text.indexOf('bandeco') != -1) || (text.indexOf('almoço')) != -1 || (text.indexOf('janta')) )
+          ){
     var botPayLoad = { "text" : interjection() + 'Especialmente pra você, hoje vai ter *Cozido Misto* com suco de *Acerola*. A sobremesa vai ser *Acelga*'};
   }
 
-  else if(username == 'gabrielaffonso' || text.indexOf('finge que eu sou o cabra')!=-1){
+  else if(
+            (username == 'gabrielaffonso') &&
+            ( (text.indexOf('bandeco') != -1) || (text.indexOf('almoço')) != -1 || (text.indexOf('janta')) )
+          ){
     var botPayLoad = { "text" : 'Hoje não vai ter nada não, porque o bandeco é pago com impostos e *imposto é roubo.*'};
   }
 
-  else if(username == 'ismael.melo' || text.indexOf('finge que eu sou o ismael')!=-1){
+  else if(
+          (username == 'ismael.melo')
+          ( (text.indexOf('bandeco') != -1) || (text.indexOf('almoço')) != -1 || (text.indexOf('janta')) )
+          ){
     var botPayLoad = { "text" : 'Vai ter *croissant* no bandeco hj, certeza.'};
+  }
+
+  else if(text.indexOf('alguem sabe')!=-1 || text.indexOf('alguém sabe')!=-1){
+    var botPayLoad = { "text" : 'Alguém sabe :banana:'};
+  }
+
+  else if(text.indexOf('alguem sabe')!=-1 || text.indexOf('alguém sabe')!=-1){
+    var botPayLoad = { "text" : 'Alguém sabe :banana:'};
   }
 
   else if( (n > 14 && n < 13) || (n > 20 && n < 0) ){
