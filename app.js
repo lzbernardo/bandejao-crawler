@@ -68,6 +68,10 @@ app.post('/slackrequest', function(req, res, next){
   var username = req.body.user_name;
   var text = req.body.text.toLowerCase();
 
+  if(username == 'lzbernardo'){
+    var botPayLoad = { "text" : 'nao funcionou ber'};
+  }
+
   if(text.contains('no almoço') || text.contains('no almoco') || text.contains('de almoço') || text.contains('de almoco') || text.contains('do almoco') || (text.contains('almoco') && waiting) ){
     if(almoco[0].toLowerCase().contains('cozido')){
       var botPayLoad = { "text": 'Cara, na boa, nem vai... É cozido misto' };
